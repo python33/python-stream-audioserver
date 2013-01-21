@@ -1,13 +1,26 @@
 from SocketServer import ThreadingMixIn, UDPServer
 
 class RequestHandler( StreamRequestHandler ):
-    # her skal det skje noe hver gang en bruker kobler seg på serveren
-    pass
-
+    def handle(self):
+        self.data = self.rfile.readline() # read data
+        self.wfile.write(self.data.upper()) # send data back through the connection
+    
 class StreamServer( UDPServer ):
-    # her skal vi bare starte UDP serveren
-    pass
+    def __init__(self, server_address = ('', 8080) ):
+        UDPServer.__init__(self, 
+                        server_address, 
+                        RequestHandler
+                    )
 
 class ThreadedStreamServer(ThreadingMixIn, PipeServer):
-    # denne skal vi ikke gjøre noe med
     pass
+    
+
+if __name__ == '__main__':
+    server = ThreadedPipeServer()
+    try:
+        print "Server is running."
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print "\nServer is shuting down. \nPlease wait for the called requests to terminate."
+        server.server_close()
