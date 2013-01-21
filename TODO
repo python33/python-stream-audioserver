@@ -1,0 +1,6 @@
+Server:
+  + must be able to index files
+      - sqlite3
+  + server media files
+  + listen to webservice
+      - implement into Django ?
