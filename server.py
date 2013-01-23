@@ -17,7 +17,7 @@ class ThreadedStreamServer(ThreadingMixIn, PipeServer):
     
 
 if __name__ == '__main__':
-    server = ThreadedPipeServer()
+    server = ThreadedStreamServer()
     try:
         print "Server is running."
         server.serve_forever()
