@@ -4,3 +4,14 @@ Server:
   + server media files
   + listen to webservice
       - implement into Django ?
+
+
+=== Sources
+ - https://pyspotify.readthedocs.org
+ - http://people.csail.mit.edu/hubert/pyaudio/
+ - https://github.com/sampsyo/audioread
+ - http://www.portaudio.com
+
+=== Dependencies
+ - ffmpeg (for decoding files)
+ - portaudio (for playing sounds)
