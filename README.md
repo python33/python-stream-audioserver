@@ -7,8 +7,15 @@ This will evolve to become a full fledged audio streaming server.
 * Stream audio to multiple PCs
 * Control the streaming service over a webservice
 
-##Requirements
+##Dependencies
 * `Python`
+* `portaudio`
+* `ffmpeg`
+
+##Requirements
+* `pyaudio`
+
+`$ sudo pip install pyaudio`
 
 ##Collaborators
 * Øyvind Grimens (Oyvindkg)
