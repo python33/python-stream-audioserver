@@ -22,4 +22,4 @@ This will evolve to become a full fledged audio streaming server.
 
 
 ##The idea in play
-![explanation](overview.png "How it works")
+![explanation](https://raw.github.com/jorgenkg/python-stream-audioserver/master/overview.png "How it works")
