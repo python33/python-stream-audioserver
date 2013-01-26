@@ -6,32 +6,35 @@ from SocketServer import ThreadingMixIn, UDPServer, BaseRequestHandler
 
 
 class RequestHandler( BaseRequestHandler ):
-    
+
     def __init__(self, request, client_address, server):
         BaseRequestHandler.__init__(self, request, client_address, server)
         
+    def _open_file(self, filename):
+        self._file = audioread.audio_open( filename )
     
     def handle(self):
-        recieved_data, connection = self.request
+        received_data, connection = self.request
+        
+        self._open_file( os.path.join(os.path.dirname(__file__),"test.mp3") )
         self._audiorender = pyaudio.PyAudio()
         
-        f = audioread.audio_open(os.path.join(os.path.dirname(__file__),"test.mp3"))
-        
-        stream = self._audiorender.open(
+        self.stream = self._audiorender.open(
                                         format=pyaudio.paInt16,
-                                        channels=f.channels,
-                                        rate=f.samplerate,
+                                        channels=self._file.channels,
+                                        rate=self._file.samplerate,
                                         output=True
                                     )
-        for buff in f:
-            stream.write(buff)
-        f.close()
-        stream.stop_stream()
-        stream.close()
+        for buff in self._file:
+            self.stream.write(buff)
         
+        
+        self._file.close()
+        self.stream.stop_stream()
+        self.stream.close()
         self._audiorender.terminate()
         
-        connection.sendto(recieved_data.upper(), self.client_address)
+        connection.sendto("1", self.client_address) # signal that we are done
     
 class StreamServer(UDPServer):
     def __init__(self, server_address=('', 8080)):

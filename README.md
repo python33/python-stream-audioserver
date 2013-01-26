@@ -14,9 +14,12 @@ This will evolve to become a full fledged audio streaming server.
 
 ##Requirements
 * `pyaudio`
+* `audioread`
 
-`$ sudo pip install pyaudio`
+[audioread](https://github.com/sampsyo/audioread)
+[pyaudio](http://people.csail.mit.edu/hubert/pyaudio/#downloads)
+[portaudio](https://subversion.assembla.com/svn/portaudio/portaudio/)
 
-##Collaborators
-* Øyvind Grimens (Oyvindkg)
-* Jørgen Grimnes (Jorgenkg)
+
+##The idea in play
+![explanation](overview.png "How it works")

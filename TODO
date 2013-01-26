@@ -6,12 +6,22 @@ Server:
       - implement into Django ?
 
 
+
 === Sources
  - https://pyspotify.readthedocs.org
  - http://people.csail.mit.edu/hubert/pyaudio/
  - https://github.com/sampsyo/audioread
  - http://www.portaudio.com
 
+=== Requirements
+ - PyAudio ( http://people.csail.mit.edu/hubert/pyaudio/#downloads )
+ - audioread ( https://github.com/sampsyo/audioread )
+
 === Dependencies
- - ffmpeg (for decoding files)
- - portaudio (for playing sounds)
+ - ffmpeg ( through apt-get  )
+ - PortAudio ( svn: https://subversion.assembla.com/svn/portaudio/portaudio/ )
+ 
+ 
+ 
+=== Notes to self:
+ - use socket.setblocking(1) to wait for readiness
