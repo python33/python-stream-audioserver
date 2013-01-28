@@ -1,7 +1,5 @@
 import audioread
-import pyaudio
 import os
-import socket
 from SocketServer import ThreadingMixIn, BaseRequestHandler,\
     TCPServer
 import threading
@@ -38,7 +36,6 @@ class RequestHandler( BaseRequestHandler ):
         
         try:
             while self.run:
-                if DEBUG: print "* handler waiting: %s:%d" % self.request.getsockname()
                 command = self._wait_response()
                 if self._do_action( command ):
                     self._send("ok")
@@ -81,21 +78,20 @@ class StreamServer(TCPServer):
         if DEBUG: print "* Remove sink: %s:%d" % sink.getsockname()
         self.lock.release()
     
+    def send_all(self, data):
+        for sink in self.sinks:
+            sink.sendall(data)
+    
     def _stream_audio(self):
         self._file = audioread.audio_open( os.path.join(os.path.dirname(__file__), "test.mp3" ))
-        self._audiorender = pyaudio.PyAudio()
-        self.stream = self._audiorender.open(
-                                        format=pyaudio.paInt16,
-                                        channels=self._file.channels,
-                                        rate=self._file.samplerate,
-                                        output=True
-                                    )
+        print "playing,%d,%d" % (self._file.channels, self._file.samplerate)
+        self.send_all("playing,%d,%d" % (self._file.channels, self._file.samplerate))
+
         for buff in self._file:
-            self.stream.write(buff)
+            for sink in self.sinks:
+                sink.sendall(buff)
         
-        self.stream.stop_stream()
-        self.stream.close()
-        self._audiorender.terminate()
+        self._file.close()
         
         self.lock.acquire()
         self.is_playing = False
